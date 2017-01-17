@@ -1,5 +1,5 @@
 <?php
- define('DB_PATH', __DIR__.'/db/');
+ define('DB_PATH', __DIR__.'/alerts/');
  require_once 'xmlDB.php';
  if (isset($_POST['add']))
  {
@@ -28,6 +28,7 @@
 <hr />
 <?php
  $news = Database::factory('news')->select()->order_by('id', 'DESC')->find_all();
+ if( isset($ex)){ exit(); }
  foreach($news as $post): 
 ?>
     

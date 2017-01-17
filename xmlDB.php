@@ -310,7 +310,14 @@
          $data = Data::getInstance();
          if (!isset($this->_row_id))
          {
-             $this->check_records($xml->row);
+             try{
+                 
+              $this->check_records($xml->row);
+              
+             } catch (Exception $ex) {
+                 echo 'Message: ' .$ex->getMessage();
+             }
+             
 
              foreach ($xml->row as $row)
              {
@@ -329,7 +336,13 @@
              $row_id = (int) $this->_row_id;
              $fields = $xml->xpath('/table/row[@id="'.$row_id.'"]/field');
 
-             $this->check_records($fields);
+             try {
+                 $this->check_records($fields);
+             } catch (Exception $ex) {
+                 echo 'Message: ' .$ex->getMessage();
+             }
+             
+             
 
              $obj = $data;
 
@@ -558,9 +571,13 @@
       */
      private function _where()
      {
-         $this->_datas = array_filter($this->_datas, array($this, '_where_filter'));
+         
+         if(is_array($this->_datas)) {
+            $this->_datas = array_filter($this->_datas, array($this, '_where_filter'));
+            return $this;
+         }
 
-         return $this;
+         //return $this;
      }
 
      /**
